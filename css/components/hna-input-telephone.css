@@ -1,0 +1,11 @@
+.hna-input{
+    padding: 5px 10px;
+    background-color: #fff;
+    height:30px;
+    line-height:30px;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #333;
+    border-radius: 4px;
+    box-sizing: border-box;
+}

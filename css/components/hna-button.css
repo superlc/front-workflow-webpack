@@ -1,0 +1,106 @@
+.hna-button{
+    padding:0;
+    margin: 0;
+    border: 0;
+    background-color: transparent;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+}
+.hna-button.btn-normal{
+    height:35px;
+    line-height:35px;
+    padding-left:25px;
+    padding-right:25px;
+}
+.hna-button.btn-large{
+    font-size: 16px;
+    height:45px;
+    line-height:45px;
+}
+/*强调的按钮*/
+.hna-button.btn-strong{
+    background-color: #f64141;
+    color: #fff;
+    font-size:17px;
+}
+.hna-button.btn-strong:active{
+    background-color: #6a1c1c;
+    color: #fff;
+}
+/*线框按钮*/
+.hna-button.border-btn{
+    border:1px solid #f64141;
+    color: #f64141;
+    background-color: #fff;
+}
+.hna-button.border-btn:active{
+    background-color: #f8f8f8;
+}
+/*立体按钮*/
+ .hna-button.solid-btn{
+     position: relative;
+     color: #de3737;
+ }
+.hna-button.solid-btn:before{
+    content: '';
+    display: block;
+    height:100%;
+    width:100%;
+    position: absolute;
+    left:0;
+    top: 0;
+    z-index: 2;
+    background-color: #ffe87f;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+.hna-button.solid-btn:active:before{
+    background-color: #fac545;
+}
+.hna-button.solid-btn:after{
+    content: '';
+    display: block;
+    height:100%;
+    width:100%;
+    position: absolute;
+    left:0;
+    top: 2px;
+    z-index: 1;
+    background-color: #fac545;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+.hna-button.solid-btn:active:after{
+    background-color: #ffe87f;
+}
+.solid-btn .btn-text{
+    position: absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index: 3;
+}
+/*按钮不可用状态*/
+.hna-button.dis{
+    background-color: #ccc;
+}
+.hna-button.border-btn.dis{
+    background-color: transparent;
+    border: 1px solid #faa0a0;
+    color: #faa0a0;
+}
+.hna-button.btn-strong.dis:active{
+    background-color: #ccc;
+}
+
+/*整屏的大按钮*/
+.btn-wrapper{
+    padding-left:15px;
+    padding-right:15px;
+}
+.btn-wrapper .hna-button{
+    display: block;
+    width:100%;
+}

@@ -1,0 +1,25 @@
+html,body{
+    padding:0;
+    margin:0;
+    /*移动端字体序列*/
+    font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+    /*PC端字体序列*/
+    /*
+    font-family:"Microsoft yahei","Microsoft yahei UI",arial,宋体;
+    */
+    -webkit-tap-highlight-color:transparent;
+}
+div,p,ul,ol,li,h1,h2,h3,h4{
+    padding:0;
+    margin:0;
+}
+a{
+    text-decoration: none;
+}
+button,input{
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: 0;
+    padding: 0;
+}
