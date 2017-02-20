@@ -10,6 +10,6 @@ var Config = {
         }
     ],
     regex : /\.js$|\.css$|\.ejs$|\.html$/g,
-    cmd : 'npm run build-dev'
+    cmd : 'npm run dev'
 };
 module.exports = Config;

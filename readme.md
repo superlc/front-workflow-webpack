@@ -8,5 +8,5 @@ npm start
 
 发布阶段编译命令
 ```javascript
-npm run build-release
+npm run build
 ```

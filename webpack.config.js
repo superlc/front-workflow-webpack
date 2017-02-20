@@ -4,25 +4,30 @@
  */
 var path = require('path');
 var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const host = 'http://192.168.1.1';
+//插件
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CommonsChunkPlugin = require('./node_modules/webpack/lib/optimize/CommonsChunkPlugin');
+
+const host = '..';
 
 module.exports = {
     // click on the name of the option to get to the detailed documentation
     // click on the items with arrows to show more examples / advanced options
 
     entry: {
+        vue : path.resolve(__dirname, 'js/common/vue.js'),
+        global : path.resolve(__dirname, 'js/common/global.js'),
         pageA: path.resolve(__dirname, 'js/pageA.js'),
         pageB: path.resolve(__dirname, 'js/pageB.js')
     }, // string | object | array
 
     output: {
         // options related to how webpack emits results
-        path: path.resolve(__dirname, "assets/js/"), // string
+        path: path.resolve(__dirname, "assets"), // string
         // the target directory for all output files
         // must be an absolute path (use the Node.js path module)
-        filename: "[name].js", // string
+        filename: "js/[name].js", // string
         // the filename template for entry chunks
         publicPath: "/assets/", // string
         // the url to the output directory resolved relative to the HTML page
@@ -35,7 +40,7 @@ module.exports = {
         rules: [
             {
                 test: /js[\\|\/].+\.js$/,
-                exclude: /(node_modules|bower_components)/,
+                exclude:/node_modules/,
                 loader: 'babel-loader',
                 query: {
                     presets: ['es2015'],
@@ -57,9 +62,11 @@ module.exports = {
         // extensions that are used
 
         alias: {
-
+            //基础库Vuejs
+            "Vue": path.resolve(__dirname,"js/common/vue.js"),
+            //页面文件、模块文件的别名
             "moduleA": path.resolve(__dirname, "js/components/modA.js"),
-            "moduleB": path.resolve(__dirname, "js/components/modB.js"),
+            "moduleB": path.resolve(__dirname, "js/components/modB.js")
             // alias "module" -> "./app/third/module.js" and "module/file" results in error
             // modules aliases are imported relative to the current context
         }
@@ -79,6 +86,12 @@ module.exports = {
     // changes chunk loading behavior and available modules
 
     plugins: [
+        //对第三方库文件、公共js文件进行单独打包
+        new CommonsChunkPlugin({
+            // The order of this array matters
+            names: ["vue","global"],
+            minChunks: 2
+        }),
         //对html模板进行编译
         new HtmlWebpackPlugin({
             title: '测试',
@@ -86,9 +99,40 @@ module.exports = {
             host: host,
             filename: path.resolve(__dirname,'html/index.html'),
             template: path.resolve(__dirname,'html-tpl/index.ejs'),
+            chunksSortMode : 'dependency',
             //只加载指定的js文件列表
-            chunks: ['pageA']
+            chunks: ['vue','global','pageA']
+        }),
+        //对html模板进行编译
+        new HtmlWebpackPlugin({
+            title: '测试公共模块打包',
+            filename: path.resolve(__dirname,'html/global.html'),
+            template: path.resolve(__dirname,'html-tpl/global.ejs'),
+            chunksSortMode : 'dependency',
+            //只加载指定的js文件列表
+            chunks: ['pageB']
         })
     ]
     // list of additional plugins
+}
+
+if (process.env.NODE_ENV === 'production') {
+    module.exports.devtool = '#source-map'
+    // http://vue-loader.vuejs.org/en/workflow/production.html
+    module.exports.plugins = (module.exports.plugins || []).concat([
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.LoaderOptionsPlugin({
+            minimize: true
+        })
+    ])
 }
